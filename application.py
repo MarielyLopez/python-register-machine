@@ -22,3 +22,4 @@ def menu():
             print "Insert a number of 1 of 3"
 
 menu()
+
