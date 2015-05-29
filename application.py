@@ -1,22 +1,47 @@
 """Register Machine"""
-articles = {'Manzana':1.25, 'Pera':2.00,'Sandia':10,'Naranja':2.00,}
-enter_articles = {}
-def answer_y_n():
-            add_answer = raw_input("Add an item: ")
-            add_answer = add_answer.lower()
-            add_price = raw_input("Price: ")
-            enter_articles[add_answer] = add_price #"add_price" es el resultado de la funcion "enter_articles" que tiene como parametro el producto ingresado por el ususario que es "add_articles"
-            print enter_articles
-            print "Do you want to insert another article?"
-            article_new()
+ARTICLES = {'Manzana':1.25, 'Pera':2.00, 'Sandia':10, 'Naranja':2.00}
+ENTER_ARTICLES = {}
 
-def article_new():
+def card_gold():
     while True:
-        add_answer1 = raw_input("y/n: ")
+        print " "
+        print "Do you have a card  Gold or silver?"
+        print " "
+        answer_card = raw_input("Insert the color of your card: ")
+        if answer_card == "gold":
+            print " Su descuento es de %5 en su factura."
+            break
+        elif answer_card == "silver":
+            print "Su descuento es de %2 en su factura."
+            break 
+        elif answer_card == "silver and gold" or answer_card == "gold and silver":
+            print " Su descuento es de %5 en su factura"
+            break
+        else:
+            print "Ingrese Gold o Silver."
+
+#while True:
+def answer_y_n():
+    while True:
+        """Pedira al ususario ingresar un articulo."""
+        add_answer = raw_input("Add an item: ")
+        add_answer = add_answer.lower()
+        if add_answer == "done":
+            print " "
+            print "             Sell Articles"
+            card_gold()
+            break
+        else:
+            add_price = raw_input("Price: ")
+#_price es el resultado de  funcionENTER_ARTICLEStieneelproductoingresadoelususarioes "add_ARTICLES"
+            ENTER_ARTICLES[add_answer] = add_price
+
+def article_new(): 
+    while True:
+        add_answer1 = raw_input("create new item y/n: ")
         if add_answer1 == "y":
             print " "
             answer_y_n()
-            break
         elif add_answer1 == "n":
             print " "
             break
@@ -25,22 +50,22 @@ def article_new():
 
 def menu():
     """Main menu"""
-    print " "
-    print "          Welcome"
-    print " "
-    print "     Menu"
-    print " "
-    print "  1. Add an item: "
-    print "  2. Sell Articles: "
-    print "  3. Exit. "
-    print " "
     while True:
+        print " "
+        print "          Welcome"
+        print " "
+        print "     Menu"
+        print " "
+        print "  1. Add an item: "
+        print "  2. Sell ARTICLES: "
+        print "  3. Exit. "
+        print " "
         answer = raw_input("Enter the number of your choice: ")
         if answer == "1":
             answer_y_n()
-            break #Esto es para que me corte el programa cuando la funcion es true"
+            #Esto es para que me corte el programa cuando la funcion es true"
         elif answer == "2":
-            print "Sell Articles"
+            print "Sell ARTICLES"
             break
         elif answer == "3":
             print "Exit"
