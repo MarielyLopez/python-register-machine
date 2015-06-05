@@ -1,57 +1,56 @@
 #coding:utf8
 """Register Machine"""
-ARTICLES = {'Manzana':2.00, 'Pera':2.00, 'Sandia':10, 'Naranja':2.00, 'Fresa':5.00,
-            'Mango':3.00, 'Banano':1.00, 'Melon':5, 'Piña':5,}
+import string
+ARTICLES = {'Manzana':1.25, 'Pera':2.00, 'Sandia':10, 'Naranja':2.00,
+            'Mango':3.00,'Banano':1.00, 'Melon':5, 'Piña':5,}
 ENTER_ARTICLES = {}
 
-def card_gold():
-#this function will ask if that have a card gold or a card silver."""
-    while True:
-        print " "
-        print "Do you have a card  Gold or silver?"
-        print " "
-        answer_card = raw_input("Insert the color of your card: ")
-        print " "
-        answer_card = answer_card.lower()
-        if answer_card == "gold":
-            print " Su descuento es de %5 en su factura."
-            print " "
-            break
-        elif answer_card == "silver":
-            print "Su descuento es de %2 en su factura."
-            print " "
-            break
-        elif answer_card == "silver and gold" or answer_card == "gold and silver":
-            print " Su descuento es de %5 en su factura"
-            print " "
-            break
-        else:
-            print "Ingrese Gold o Silver."
 
-# Insert a article
+#while True:
 def answer_y_n():
+
     while True:
         """Pedira al ususario ingresar un articulo."""
         add_answer = raw_input("Add an item: ")
         add_answer = add_answer.lower()
-        if add_answer == "done":
-            print " "
-            print "             Sell Articles"
-            card_gold()
-            break
-        else:
-            add_price = raw_input("Price: ")
-#_price es el resultado de  funcionENTER_ARTICLEStieneelproductoingresadoelususarioes "add_ARTICLES"
-            ENTER_ARTICLES[add_answer] = add_price
+        while True:
+            try:
+                add_price = float(raw_input("Price: "))
+                article_new()
+                #_price es el resultado de  funcionENTER_ARTICLEStieneelproductoingresadoelususarioes "add_ARTICLES"
+                ENTER_ARTICLES[add_answer] = add_price
+                articlenew(add_answer)
+            except ValueError:
+
+                print "Insert only numbers and floats."
+                while True:
+                    break
+                    print ENTER_ARTICLES
+
+
+
+def articlenew(add_answer):
+    if add_answer == "done":
+        print "Sell Articles"
+    else:
+        print "Insert an item"
+        answer_y_n()
+
+#print "Do you want to insert another article?"M
+#article_new()
 
 def article_new():
+#verificara si la respuesta es no o si y ejecutara el programa sgun la condicion.
     while True:
-        add_answer1 = raw_input("create new item y/n: ")
+        print "  Do you do insert a new article?"
+        add_answer1 = raw_input("y/n: ")
         if add_answer1 == "y":
             print " "
             answer_y_n()
+            break
         elif add_answer1 == "n":
             print " "
+            menu()
             break
         else:
             print "Invalyd Option, insert y or n"
@@ -59,7 +58,7 @@ def article_new():
 def menu():
     """Main menu"""
     print " "
-    print "                 Welcome"
+    print "          Welcome"
     print " "
     print "     Menu"
     print " "
@@ -67,18 +66,20 @@ def menu():
     print "  2. Sell ARTICLES: "
     print "  3. Exit. "
     print " "
-    while True:
+    valuemenu = True
+    while valuemenu ==True:
         answer = raw_input("Enter the number of your choice: ")
-        print " "
         if answer == "1":
             answer_y_n()
-            break
+            break #Esto es para que me corte el programa cuando la funcion es true"
         elif answer == "2":
             print "Sell ARTICLES"
             break
         elif answer == "3":
             print "Exit"
+            valuemenu == False
             break
+
         else:
             print "Insert a number of 1 of 3"
 
