@@ -1,108 +1,121 @@
-#coding:utf8
-"""Register Machine"""
-ARTICULOS = {'Manzana':1.25, 'Pera':2.00, 'Sandia':10, 'Naranja':2.00,
-            'Mango':3.00,'Banano':1.00, 'Melon':5, 'Piña':5,}
-ARTICULOS_EN_INVENTARIO = {}
-CANTIDAD_DE_ARTICULOS = {}
+"""Register - Machine"""
+#coding:utf-8
+import os
+import sys
+
+PRECIO_ARTICULOS = {}
+ARTICULOS_EXISTENCIA = {}
+
+def agregar_articulo():
+    limpiar_pantalla()
+    print "Añade el nombre del articulo"
+    nombre_articulo = raw_input("    >")
+    return nombre_articulo.lower()
 
 
-#while True:
-def ingresando_articulos():
-    """Pedira al ususario ingresar un articulo."""
-    respuesta_de_usuario = raw_input("Add an item: ")
-    respuesta_de_usuario = respuesta_de_usuario.lower()
-    return respuesta_de_usuario
-
-
-def ingresando_precio():
+def agregar_precio():
+    print "Ingresa el precio por unidad del articulo"
     while True:
+        precio_articulo = raw_input("    >")
         try:
-            definiendo_precio = float(raw_input("Ingresar precio: "))
-            return definiendo_precio
-            break
+            precio_articulo = float(precio_articulo)
+            return precio_articulo
         except:
-            print "No es un numero"
+            print "Ingresa un numero"
 
-def ingresando_cantidad():
+
+def agregar_numero_articulos():
+    print "Ingresa la cantidad de articulos."
     while True:
+        cantidad = raw_input("    >")
         try:
-            definiendo_precio = int(raw_input("Ingresar cantidad: "))
-            return definiendo_precio
-            break
+            cantidad = int(cantidad)
+            return cantidad
         except:
-            print "No es un numero"
+            print "Ingresa un numero"
+
+
+def guardar_articulos(articulo, precio, cantidad):
+    PRECIO_ARTICULOS[articulo] = precio
+    ARTICULOS_EXISTENCIA[articulo] = cantidad
+
+def agregar_mas_articulos():
+    while True:
+        respuesta_usuario = raw_input(" Quieres agregar más articulos? y/n ")
+        respuesta_usuario = respuesta_usuario.lower()
+        if respuesta_usuario == "y" or respuesta_usuario == "yes":
+            return True
+        elif respuesta_usuario == "n" or respuesta_usuario == "no":
+            return False
+        else:
+            print "Ingresa una opcion valida"
+
+def articulo_para_vender():
+    print " ------Caja-----"
+    articulo = raw_input("    > ")
+    return articulo
+
+def verificar_si_existe(articulo):
+    existe = ARTICULOS_EXISTENCIA.has_key(articulo)
+    print existe
+    return existe
+
+def verificar_cantidad(articulo):
+    cantidad = ARTICULOS_EXISTENCIA.get(articulo)
+    if cantidad > 0:
+        print cantidad
+        return True
+    else:
+        return False
 
 def funciones_agregar_item():
-    articulo = ingresando_articulos()
-    precio = ingresando_precio()
-    cantidad = ingresando_cantidad()
-    guardar_articulo(articulo, precio, cantidad)
+    agregar_articulos = True
+    while agregar_articulos == True:
+        articulo = agregar_articulo()
+        precio = agregar_precio()
+        cantidad = agregar_numero_articulos()
+        guardar_articulos(articulo, precio, cantidad)
+        print PRECIO_ARTICULOS
+        print ARTICULOS_EXISTENCIA
+        agregar_articulos = agregar_mas_articulos()
 
 
-def guardar_articulo(articulo, precio, cantidad):
-    ARTICULOS_EN_INVENTARIO[articulo] = precio
-    CANTIDAD_DE_ARTICULOS[articulo] = cantidad
-    print ARTICULOS_EN_INVENTARIO
-    print ""
-    print CANTIDAD_DE_ARTICULOS
-    print " "
-    pregunta_si_o_no()
+def funciones_vender():
+    articulo = articulo_para_vender()
+    existe = verificar_si_existe(articulo)
+    disponible = verificar_cantidad(articulo)
 
+def limpiar_pantalla():
+    sistema_operativo = os.name
 
-def pregunta_si_o_no():
-    while True:
-        print "  Quiere ingresar otro articulo??"
-        respuesta_usuario = raw_input("si/no: ")
-        if respuesta_usuario == "si":
-            print ""
-            funciones_agregar_item()
-            break
-        elif respuesta_usuario == "no":
-            print " "
-            menu()
-            break
-        else:
-            print "Opcion Invalida , inserte si o no"
-
-
-def vender_articulos():
-    while True:
-        print""
-        vender_articulos_respuesta = ingresando_articulos()
-        if vender_articulos_respuesta == "done":
-            print " Hola que hace"
-#            guardar_articulo()
-#            print "hola que hace2"
-            break
-        else:
-            print "ingrese otro articulo"
-
+    if sistema_operativo == "posix":
+        os.system("reset")
+    elif sistema_operativo == "nt":
+        os.system("cls")
 
 
 def menu():
-    """Main menu"""
-    print " "
-    print "          Welcome"
-    print " "
-    print "     Menu"
-    print " "
-    print "  1. Add an item: "
-    print "  2. Sell ARTICULOS: "
-    print "  3. Exit. "
-    print " "
+    limpiar_pantalla()
+    print ""
+    print "  --------------Menu---------------"
+    print "     Elige una opcion"
+    print "     Ingresa 1 para agregar articulos"
+    print "     Ingresa 2 para vender articulos"
+    print "     Ingresa 3 para salir"
+    print ""
+
     while True:
-        respuesta = raw_input("Enter the number of your choice: ")
-        if respuesta == "1":
+        ingresar_respuesta = raw_input("    > ")
+        if ingresar_respuesta == "1":
             funciones_agregar_item()
-            break #Esto es para que me corte el programa cuando la funcion es true"
-        elif respuesta == "2":
-            print "Sell ARTICULOS"
-            vender_articulos()
-            break
-        elif respuesta == "3":
-            print "Exit"
+        elif ingresar_respuesta == "2":
+            funciones_vender()
+        elif ingresar_respuesta == "3":
+            print "Adios"
             break
         else:
-            print "Insert a number of 1 of 3"
+            print "opcion invalida"
+            break
+
 
 menu()
