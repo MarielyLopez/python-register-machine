@@ -1,4 +1,3 @@
-"""Register - Machine"""
 #coding:utf-8
 import os
 import sys
@@ -46,6 +45,7 @@ def agregar_mas_articulos():
         if respuesta_usuario == "y" or respuesta_usuario == "yes":
             return True
         elif respuesta_usuario == "n" or respuesta_usuario == "no":
+            menu()
             return False
         else:
             print "Ingresa una opcion valida"
@@ -61,11 +61,16 @@ def verificar_si_existe(articulo):
     return existe
 
 def verificar_cantidad(articulo):
+    #verificar_cantidades = True
+    #while verificar_cantidades == True:
     cantidad = ARTICULOS_EXISTENCIA.get(articulo)
+    print "primero " + str(cantidad)
     if cantidad > 0:
-        print cantidad
+        ARTICULOS_EXISTENCIA[articulo] = cantidad -1
+        print ARTICULOS_EXISTENCIA.get(articulo)
         return True
     else:
+        print "false"
         return False
 
 def funciones_agregar_item():
@@ -81,9 +86,15 @@ def funciones_agregar_item():
 
 
 def funciones_vender():
-    articulo = articulo_para_vender()
-    existe = verificar_si_existe(articulo)
-    disponible = verificar_cantidad(articulo)
+    vender_productos = True
+    while vender_productos == True:
+        articulo = articulo_para_vender()
+        if verificar_si_existe(articulo) == True:
+            disponible = verificar_cantidad(articulo)
+            if disponible == False:
+                print "No disponible"
+        else:
+            pass
 
 def limpiar_pantalla():
     sistema_operativo = os.name
@@ -110,6 +121,7 @@ def menu():
             funciones_agregar_item()
         elif ingresar_respuesta == "2":
             funciones_vender()
+            verificar_cantidad
         elif ingresar_respuesta == "3":
             print "Adios"
             break
