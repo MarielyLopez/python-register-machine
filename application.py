@@ -4,151 +4,157 @@ from operator import itemgetter
 import os
 import sys
 
-PRECIO_ARTICULOS = {}
-ARTICULOS_EXISTENCIA = {}
-PRODUCTOS_COMPRADOS = []
-PRODUCTOS_COMPRADOS_NOMBRES = []
-CONTEO_PRODUCTOS = 0
-COLOR_DE_TARJETAS = []
-tipo_de_color=[]
-TIPO_DE_DESCUENTO = ""
+PRICE_ARTICLE = {}#Dictionari
+EXISTENCE_ARTICLE = {}
+PRODUCTS_PURCHASED = []#List
+PRODUCTS_PURCHASED_NAMES = []
+COUNT_PRODUCTS = 0
+COLORS_OF_CARDS = []
+SORT_COLOR = []
+SORT_OF_DISCOUNT = ""
 
-def agregar_articulo():
-    limpiar_pantalla()
-    print "Añade el nombre del articulo"
-    nombre_articulo = raw_input("     >")
-    return nombre_articulo.lower()
+def add_article():
+#It will ask the user to enter an article.
+    resert_window()
+    print "It adds the name of the article"
+    name_article = raw_input("     >") #The article inserted will be saving in variable name_article.
+    return name_article.lower()
 
 
-def agregar_precio():
-    print "Ingresa el precio por unidad del articulo"
-    agregarprecio = True
-    while agregarprecio == True:
-        precio_articulo = raw_input("    >")
+def add_price():
+#It will ask the user to enter price of article
+    print "Inserts the item's price"
+    addprice = True
+    while addprice == True:
+        price_article = raw_input("    >")
         try:
-            precio_articulo = float(precio_articulo)
-            return precio_articulo
+            price_article = float(price_article)
+            return price_article
         except:
-            print "Ingresa un numero"
+            print "Insert a number"
 
 
-def agregar_numero_articulos():
-    print "Ingresa la cantidad de articulos."
-    agregarnumeroarticulos = True
-    while agregarnumeroarticulos == True:
-        cantidad = raw_input("    >")
+def add_quantity_items():
+#It will ask the user to enter quantity of articles of there's at inventory.
+    print "Inserts add quantity of items."
+    addquantityitems = True
+    while addquantityitems == True:
+        quantity = raw_input("    >")
         try:
-            cantidad = int(cantidad)
-            return cantidad
+            quantity = int(quantity)
+            return quantity
         except:
-            print "Ingresa un numero"
+            print "Insert a number"
 
 
-def guardar_articulos(articulo, precio, cantidad):
-    PRECIO_ARTICULOS[articulo] = precio
-    ARTICULOS_EXISTENCIA[articulo] = cantidad
+def save_articles(article, price, quantity):
+#will be saving price of article in the dictionary.
+    PRICE_ARTICLE[article] = price
+    EXISTENCE_ARTICLE[article] = quantity
 
-def agregar_mas_articulos():
-    agregarmasarticulos = True
-    while agregarmasarticulos == True:
-        respuesta_usuario = raw_input(" Quieres agregar más articulos? y/n ")
-        respuesta_usuario = respuesta_usuario.lower()
-        if respuesta_usuario == "y" or respuesta_usuario == "yes":
+def add_more_article():
+    addmorearticle = True
+    while addmorearticle == True:
+        user_answer = raw_input(" Are you want to add more articles? y/n  ")
+        user_answer = user_answer.lower()
+        if user_answer == "y" or user_answer == "yes":
             return True
-        elif respuesta_usuario == "n" or respuesta_usuario == "no":
+        elif user_answer == "n" or user_answer == "no":
             menu()
             return False
         else:
-            print "Ingresa una opcion valida"
+            print "Insert a valid option"
 
 #start the fuctions for done.
-def articulo_para_vender():
+def article_to_sell():
+#There will be enter all products sold.
     print " "
-    print " --------------Caja---------------"
+    print " --------------Cash---------------"
     print "  "
-    articulo = raw_input("    > ")
-    articulo = articulo.lower()
-    return articulo
+    article = raw_input("    > ")
+    article = article.lower()
+    return article
 
-def verificar_si_existe(articulo):
-    existe = ARTICULOS_EXISTENCIA.has_key(articulo)
-    return existe
+def check_if_exists(article):
+    exists = EXISTENCE_ARTICLE.has_key(article)
+    return exists
 
-def verificar_cantidad(articulo):
-    cantidad = ARTICULOS_EXISTENCIA.get(articulo)
-    print "Habia " + str(cantidad), articulo, "(s)"
-    if cantidad > 0:
-        ARTICULOS_EXISTENCIA[articulo] = cantidad -1
-        conteo_de_productos_nombres(articulo)
-        print "Hay", ARTICULOS_EXISTENCIA.get(articulo), articulo
-        limpiar_pantalla()
+def check_quantity(article):
+    quantity = EXISTENCE_ARTICLE.get(article)
+    print "Had " + str(quantity), article, "(s)"
+    if quantity > 0:
+        EXISTENCE_ARTICLE[article] = quantity -1
+        count_products_name(article)
+        print "There is", EXISTENCE_ARTICLE.get(article), article
+        resert_window()
     else:
-        print "No disponible"
+        print "Not available"
 
 
-def conteo_de_productos_nombres(articulo):
-    PRODUCTOS_COMPRADOS_NOMBRES.append(articulo)
+def count_products_name(article):
+    PRODUCTS_PURCHASED_NAMES.append(article)
 
-def orden_productos():
-    PRODUCTOS_COMPRADOS = sorted(PRODUCTOS_COMPRADOS_NOMBRES)
-    CONTEO_PRODUCTOS = len(PRODUCTOS_COMPRADOS)
-    creacion_de_factura(CONTEO_PRODUCTOS, PRODUCTOS_COMPRADOS)
+def order_products():
+    #It will display the products in alphabetical order
+    PRODUCTS_PURCHASED = sorted(PRODUCTS_PURCHASED_NAMES)# It will alphabetical order.
+    COUNT_PRODUCTS = len(PRODUCTS_PURCHASED)#count how many here.
+    Creation_of_invoice(COUNT_PRODUCTS, PRODUCTS_PURCHASED)#here they are numbered and ordered products are stored.
     return False
 
-def verificacion_de_done(articulo):
-        if articulo == "done":
-            print "TARJETA INGRESADA"
-            print "Se Imprimira la factura"
+def check_of_done(article):
+        if article == "done":
+            print "Card has been inserting."
+            print "It will print the invoice"
             print "-----------------------------------------"
             return True
-            TIPO_DE_DESCUENTO = "gold"
+            SORT_OF_DISCOUNT = "gold"
             return"gold"
-        elif articulo == "silver":
-            TIPO_DE_DESCUENTO = "silver"
+        elif article == "silver":
+            SORT_OF_DISCOUNT = "silver"
             return "silver"
-        elif articulo == "gold":
-            TIPO_DE_DESCUENTO = "gold"
+        elif article == "gold":
+            SORT_OF_DISCOUNT = "gold"
             return "gold"
         else:
             return False
 
 
-def creacion_de_factura(recibir_conteo, lista):
-    limpiar_pantalla()
+def Creation_of_invoice(recibir_conteo, lista):
+    resert_window()
     subtotal = 0
     print "  "
-    print "----------------FACTURA------------------"
+    print "----------------INVOICE------------------"
     print "  "
-    print  "Su Cantidad de productos comprados es: " + str(recibir_conteo)
+    print  "Your quantity of sell article is: " + str(recibir_conteo)
     print "  "
-    print "Cant.        PRODUCTO           Precio/unidad"
+    print "Quantity.        Product           Price/Unit"
     print "  "
-    for producto in PRECIO_ARTICULOS:
-        CONTEO_PRODUCTOS = lista.count(producto)
-        if CONTEO_PRODUCTOS > 0:
-            precio = PRECIO_ARTICULOS[producto]
-            subtotal += (CONTEO_PRODUCTOS*precio)
-            subtotal_con_iva = (subtotal* 0.12)+subtotal
-            Total_final = subtotal + descontando_descuentos(subtotal)
-            print CONTEO_PRODUCTOS, producto +"   ...........................", str(precio) +" cada uno(a)"
-    print "Total sin descuento   ..............", subtotal
-    print "Total con iva         ..............",subtotal_con_iva
-    print "Total con Final       ..............", Total_final
-    print "-------------------------------------------"
-    print "           Gracias por su compra"
+    for product in PRICE_ARTICLE:
+        COUNT_PRODUCTS = lista.count(product)
+        if COUNT_PRODUCTS > 0:
+            price = PRICE_ARTICLE[product]
+            subtotal += (COUNT_PRODUCTS*price)
+            subtotal_with_iva = (subtotal* 0.12)+subtotal
+            Total_final = subtotal + discounting_of_card(subtotal)
+            print COUNT_PRODUCTS, product +"   ...........................", str(price) +" cada uno(a)"
+    print "Undiscounted total     ..............",subtotal
+    print "Total with iva         ..............",subtotal_with_iva
+    print "Total Final            ..............",Total_final
+    print "-----------------------------------------------"
+    print "           Thank you for shopping with we"
     print " "
     sys.exit(1)
 
-def descontando_descuentos(subtotal):
-# se selecciona el descuento dependiendo de lo ingresao por el usuario
+def discounting_of_card(subtotal):
+# The discount is selected depending of inserted by the user.
     simbol_gold = "G"
     simbol_silver = "S"
     gold = 0
     silver = 0
     gold_and_silver = 0
-    if simbol_gold in tipo_de_color:
+    if simbol_gold in SORT_COLOR:
         gold +=1
-    if simbol_silver in tipo_de_color:
+    if simbol_silver in SORT_COLOR:
         silver +=1
     if gold >0 and silver == 0:
         return subtotal*0.05
@@ -159,66 +165,66 @@ def descontando_descuentos(subtotal):
     else:
         return "0"
 
-def funciones_agregar_item():
-    agregar_articulos = True
-    while agregar_articulos == True:
-        articulo = agregar_articulo()
-        precio = agregar_precio()
-        cantidad = agregar_numero_articulos()
-        guardar_articulos(articulo, precio, cantidad)
-        agregar_articulos_pregunta = agregar_mas_articulos()
+def fuctions_add_items():
+    add_articles = True
+    while add_articles == True:
+        article = add_article()
+        price = add_price()
+        quantity = add_quantity_items()
+        save_articles(article, price, quantity)
+        add_articles_ask = add_more_article()
 
 
-def funciones_vender():
-    vender_productos = True
-    while vender_productos == True:
-        articulo = articulo_para_vender()
-        if verificacion_de_done(articulo) == True:
-            vender_productos = orden_productos()
-        elif verificacion_de_done(articulo) == "silver":
-            print "SE INGRESO SILVER"
-            tipo_de_color.append("S")
-        elif verificacion_de_done(articulo) == "gold":
-            print "SE INGRESO GOLD"
-            tipo_de_color.append("G")
+def fuctions_sell():
+    sell_products = True
+    while sell_products == True:
+        article = article_to_sell()
+        if check_of_done(article) == True:
+            sell_products = order_products()
+        elif check_of_done(article) == "silver":
+            print "It's inserted Silver"
+            SORT_COLOR.append("S")
+        elif check_of_done(article) == "gold":
+            print "It's inserted Gold"
+            SORT_COLOR.append("G")
         else:
-            if verificar_si_existe(articulo) == True:
-                disponible = verificar_cantidad(articulo)
-                if disponible == False:
-                    print "No disponible"
-                    vender_productos = True
+            if check_if_exists(article) == True:
+                available = check_quantity(article)
+                if available == False:
+                    print "No available"
+                    sell_products = True
             else:
-                print "Articulo no existe"
+                print "The article not exists."
 
-def limpiar_pantalla():
-    sistema_operativo = os.name
-    if sistema_operativo == "posix":
+def resert_window():
+    system_operative = os.name
+    if system_operative == "posix":
         os.system("reset")
-    elif sistema_operativo == "nt":
+    elif system_operative == "nt":
         os.system("cls")
 
-"""Imprimira mi menu pidiendole al usuario ingresar su opcion."""
+#Print my menu asking the user to input your choice.
 def menu():
-    limpiar_pantalla()
+    resert_window()
     print ""
     print " --------------Menu---------------"
-    print "     Elige una opcion"
-    print "     Ingresa 1 para agregar articulos"
-    print "     Ingresa 2 para vender articulos"
-    print "     Ingresa 3 para salir"
+    print "     Choose an option"
+    print "     Enter 1 to add articles"
+    print "     Enter 2 for sell articles"
+    print "     Enter 3 to exit"
     print ""
-    respuestamenu = True
-    while respuestamenu == True:
-        ingresar_respuesta = raw_input("    > ")
-        if ingresar_respuesta == "1":
-            funciones_agregar_item()
-        elif ingresar_respuesta == "2":
-            funciones_vender()
-            verificar_cantidad
+    answermenu = True
+    while answermenu == True:
+        insert_answer = raw_input("    > ")
+        if insert_answer == "1":
+            fuctions_add_items()
+        elif insert_answer == "2":
+            fuctions_sell()
+            check_quantity
             break
-        elif ingresar_respuesta == "3":
-            print "Adios"
+        elif insert_answer == "3":
+            print "Good bye"
             sys.exit(1)
         else:
-            print "opcion invalida"
+            print "Invalid option"
 menu()
