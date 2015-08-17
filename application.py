@@ -126,7 +126,7 @@ def Creation_of_invoice(recibir_conteo, lista):
     print "----------------INVOICE------------------"
     print "  "
     print "Your quantity of purchased article is: " + str(recibir_conteo)
-    print "Card inserted:" , print_card()
+    print "Card inserted:", print_card()
     print "  "
     print "Quantity.        Product           Price/Unit"
     print "  "
@@ -137,15 +137,17 @@ def Creation_of_invoice(recibir_conteo, lista):
             subtotal += (COUNT_PRODUCTS*price)
             subtotal_with_iva = (subtotal* 0.12)+subtotal
             Total_final = subtotal_with_iva - discounting_of_card(subtotal)
-            print COUNT_PRODUCTS,product +"  ...........................","Q.%.2f" % price +"each."
-    print "Undiscounted total    ..............","Q.%.2f" % subtotal
-    print "Undiscounted is       ..............","Q.%.2f" % discounting_of_card(subtotal)
-    print "Total with iva        ..............","Q.%.2f" % subtotal_with_iva
-    print "Total Final           ..............","Q.%.2f" % Total_final
+            print COUNT_PRODUCTS,"              " ,product +"   ..............","Q.%.2f" % price +"unit"
+    print "subtotal              ..............","Q.%.2f" % subtotal
+    print "Discount is           ..............","Q.%.2f" % discounting_of_card(subtotal)
+    print "Subtotal with iva     ..............","Q.%.2f" % subtotal_with_iva
+    print "Final Total           ..............","Q.%.2f" % Total_final
     print "-----------------------------------------------"
     print "           Thank you for shopping with us."
     print " "
-    sys.exit(1)
+#    sys.exit(1)
+    raw_input(" ")
+    menu()
 
 def print_card():
 #This check color of cards.
