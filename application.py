@@ -17,7 +17,7 @@ def add_article():
 #It will ask the user to enter an article.
     resert_window()
     print "It adds the name of the article"
-    name_article = raw_input("     >") #The article inserted will be saving in variable name_article.
+    name_article = raw_input("     >")#The article inserted will be saving in variable name_article.
     return name_article.lower()
 
 
@@ -31,7 +31,7 @@ def add_price():
             price_article = float(price_article)
             return price_article
         except:
-            print "Insert a number"
+            print "Insert a number ."
 
 
 def add_quantity_items():
@@ -44,7 +44,7 @@ def add_quantity_items():
             quantity = int(quantity)
             return quantity
         except:
-            print "Insert a number"
+            print "Try again,enter a integer for inventory"
 
 
 def save_articles(article, price, quantity):
@@ -86,7 +86,6 @@ def check_quantity(article):
         EXISTENCE_ARTICLE[article] = quantity -1
         count_products_name(article)
         print "There is", EXISTENCE_ARTICLE.get(article), article
-        resert_window()
     else:
         print "Not available"
 
@@ -98,25 +97,26 @@ def order_products():
     #It will display the products in alphabetical order
     PRODUCTS_PURCHASED = sorted(PRODUCTS_PURCHASED_NAMES)# It will alphabetical order.
     COUNT_PRODUCTS = len(PRODUCTS_PURCHASED)#count how many here.
-    Creation_of_invoice(COUNT_PRODUCTS, PRODUCTS_PURCHASED)#here they are numbered and ordered products are stored.
+#here they are numbered and ordered products are stored.
+    Creation_of_invoice(COUNT_PRODUCTS, PRODUCTS_PURCHASED)
     return False
 
 def check_of_done(article):
-        if article == "done":
-            print "Card has been inserting."
-            print "It will print the invoice"
-            print "-----------------------------------------"
-            return True
-            SORT_OF_DISCOUNT = "gold"
-            return"gold"
-        elif article == "silver":
-            SORT_OF_DISCOUNT = "silver"
-            return "silver"
-        elif article == "gold":
-            SORT_OF_DISCOUNT = "gold"
-            return "gold"
-        else:
-            return False
+    if article == "done":
+        print "Card has been inserting."
+        print "It will print the invoice"
+        print "-----------------------------------------"
+        return True
+        SORT_OF_DISCOUNT = "gold"
+        return"gold"
+    elif article == "silver":
+        SORT_OF_DISCOUNT = "silver"
+        return "silver"
+    elif article == "gold":
+        SORT_OF_DISCOUNT = "gold"
+        return "gold"
+    else:
+        return False
 
 
 def Creation_of_invoice(recibir_conteo, lista):
@@ -125,7 +125,8 @@ def Creation_of_invoice(recibir_conteo, lista):
     print "  "
     print "----------------INVOICE------------------"
     print "  "
-    print  "Your quantity of sell article is: " + str(recibir_conteo)
+    print "Your quantity of purchased article is: " + str(recibir_conteo)
+    print "Card inserted:" , print_card()
     print "  "
     print "Quantity.        Product           Price/Unit"
     print "  "
@@ -135,15 +136,36 @@ def Creation_of_invoice(recibir_conteo, lista):
             price = PRICE_ARTICLE[product]
             subtotal += (COUNT_PRODUCTS*price)
             subtotal_with_iva = (subtotal* 0.12)+subtotal
-            Total_final = subtotal + discounting_of_card(subtotal)
-            print COUNT_PRODUCTS, product +"   ...........................", str(price) +" cada uno(a)"
-    print "Undiscounted total     ..............",subtotal
-    print "Total with iva         ..............",subtotal_with_iva
-    print "Total Final            ..............",Total_final
+            Total_final = subtotal_with_iva - discounting_of_card(subtotal)
+            print COUNT_PRODUCTS,product +"  ...........................","Q.%.2f" % price +"each."
+    print "Undiscounted total    ..............","Q.%.2f" % subtotal
+    print "Undiscounted is       ..............","Q.%.2f" % discounting_of_card(subtotal)
+    print "Total with iva        ..............","Q.%.2f" % subtotal_with_iva
+    print "Total Final           ..............","Q.%.2f" % Total_final
     print "-----------------------------------------------"
-    print "           Thank you for shopping with we"
+    print "           Thank you for shopping with us."
     print " "
     sys.exit(1)
+
+def print_card():
+#This check color of cards.
+    simbol_gold = "G"
+    simbol_silver = "S"
+    gold = 0
+    silver = 0
+    gold_and_silver = 0
+    if simbol_gold in SORT_COLOR:
+        gold +=1
+    if simbol_silver in SORT_COLOR:
+        silver +=1
+    if gold >0 and silver == 0:
+        return "Gold"
+    elif silver >0 and gold == 0:
+        return "Silver"
+    if silver >0 and gold >0:
+        return "Gold"
+    else:
+        return 0
 
 def discounting_of_card(subtotal):
 # The discount is selected depending of inserted by the user.
@@ -160,10 +182,10 @@ def discounting_of_card(subtotal):
         return subtotal*0.05
     elif silver >0 and gold == 0:
         return subtotal*0.02
-    if silver >0 and gold >0:
+    elif silver >0 and gold >0:
         return subtotal*0.05
     else:
-        return "0"
+        return 0
 
 def fuctions_add_items():
     add_articles = True
@@ -187,6 +209,8 @@ def fuctions_sell():
         elif check_of_done(article) == "gold":
             print "It's inserted Gold"
             SORT_COLOR.append("G")
+#        elif check_of_done(article) != "gold" and check_of_done(article) != "silver" and check_of_done (article) != "gold" and :
+#            print "It's not has been inserting cards"
         else:
             if check_if_exists(article) == True:
                 available = check_quantity(article)
