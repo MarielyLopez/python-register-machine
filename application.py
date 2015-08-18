@@ -15,11 +15,10 @@ SORT_OF_DISCOUNT = ""
 
 def add_article():
 #It will ask the user to enter an article.
-    resert_window()
+    clear()
     print "It adds the name of the article"
     name_article = raw_input("     >")#The article inserted will be saving in variable name_article.
     return name_article.lower()
-
 
 def add_price():
 #It will ask the user to enter price of article
@@ -33,7 +32,6 @@ def add_price():
         except:
             print "Insert a number ."
 
-
 def add_quantity_items():
 #It will ask the user to enter quantity of articles of there's at inventory.
     print "Inserts add quantity of items."
@@ -45,7 +43,6 @@ def add_quantity_items():
             return quantity
         except:
             print "Try again,enter a integer for inventory"
-
 
 def save_articles(article, price, quantity):
 #will be saving price of article in the dictionary.
@@ -89,7 +86,6 @@ def check_quantity(article):
     else:
         print "Not available"
 
-
 def count_products_name(article):
     PRODUCTS_PURCHASED_NAMES.append(article)
 
@@ -118,9 +114,8 @@ def check_of_done(article):
     else:
         return False
 
-
 def Creation_of_invoice(recibir_conteo, lista):
-    resert_window()
+    clear()
     subtotal = 0
     print "  "
     print "----------------INVOICE------------------"
@@ -137,17 +132,35 @@ def Creation_of_invoice(recibir_conteo, lista):
             subtotal += (COUNT_PRODUCTS*price)
             subtotal_with_iva = (subtotal* 0.12)+subtotal
             Total_final = subtotal_with_iva - discounting_of_card(subtotal)
-            print COUNT_PRODUCTS,"              " ,product +"   ..............","Q.%.2f" % price +"unit"
-    print "subtotal              ..............","Q.%.2f" % subtotal
-    print "Discount is           ..............","Q.%.2f" % discounting_of_card(subtotal)
-    print "Subtotal with iva     ..............","Q.%.2f" % subtotal_with_iva
-    print "Final Total           ..............","Q.%.2f" % Total_final
+            print COUNT_PRODUCTS,"              " ,product +"       ......","Q.%.2f" % price +" unit"
+    print "subtotal                 ..............","Q.%.2f" % subtotal
+    print "Discount is              ..............","Q.%.2f" % discounting_of_card(subtotal)
+    print "Subtotal with iva        ..............","Q.%.2f" % subtotal_with_iva
+    print "Final Total              ..............","Q.%.2f" % Total_final
     print "-----------------------------------------------"
     print "           Thank you for shopping with us."
     print " "
-#    sys.exit(1)
+    print "Press enter"
     raw_input(" ")
+    delete_data()
     menu()
+#    new_purchase()
+
+def delete_data():
+    PRICE_ARTICLE.clear()#Dictionari
+    del PRODUCTS_PURCHASED [0:]#List
+    del PRODUCTS_PURCHASED_NAMES [0:]
+    COUNT_PRODUCTS =0
+    del COLORS_OF_CARDS [0:]
+    del SORT_COLOR [0:]
+    SORT_OF_DISCOUNT = ""
+
+def clear():
+   """Cleans the data on screen."""
+   if os.name == "posix":
+       os.system("reset")
+   elif os.name == ("nt"):
+       os.system("cls")
 
 def print_card():
 #This check color of cards.
@@ -198,7 +211,6 @@ def fuctions_add_items():
         save_articles(article, price, quantity)
         add_articles_ask = add_more_article()
 
-
 def fuctions_sell():
     sell_products = True
     while sell_products == True:
@@ -211,8 +223,6 @@ def fuctions_sell():
         elif check_of_done(article) == "gold":
             print "It's inserted Gold"
             SORT_COLOR.append("G")
-#        elif check_of_done(article) != "gold" and check_of_done(article) != "silver" and check_of_done (article) != "gold" and :
-#            print "It's not has been inserting cards"
         else:
             if check_if_exists(article) == True:
                 available = check_quantity(article)
@@ -222,16 +232,9 @@ def fuctions_sell():
             else:
                 print "The article not exists."
 
-def resert_window():
-    system_operative = os.name
-    if system_operative == "posix":
-        os.system("reset")
-    elif system_operative == "nt":
-        os.system("cls")
-
 #Print my menu asking the user to input your choice.
 def menu():
-    resert_window()
+    clear()
     print ""
     print " --------------Menu---------------"
     print "     Choose an option"
@@ -253,4 +256,5 @@ def menu():
             sys.exit(1)
         else:
             print "Invalid option"
+
 menu()
