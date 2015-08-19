@@ -117,6 +117,8 @@ def check_of_done(article):
 def Creation_of_invoice(recibir_conteo, lista):
     clear()
     subtotal = 0
+    subtotal_with_iva = 0
+    Final_Total = 0
     print "  "
     print "----------------INVOICE------------------"
     print "  "
@@ -131,12 +133,12 @@ def Creation_of_invoice(recibir_conteo, lista):
             price = PRICE_ARTICLE[product]
             subtotal += (COUNT_PRODUCTS*price)
             subtotal_with_iva = (subtotal* 0.12)+subtotal
-            Total_final = subtotal_with_iva - discounting_of_card(subtotal)
-            print COUNT_PRODUCTS,"              " ,product +"       ......","Q.%.2f" % price +" unit"
+            Final_Total = subtotal_with_iva - discounting_of_card(subtotal)
+            print COUNT_PRODUCTS,"                " ,product +"       ......","Q.%.2f" % price +" unit"
     print "subtotal                 ..............","Q.%.2f" % subtotal
     print "Discount is              ..............","Q.%.2f" % discounting_of_card(subtotal)
     print "Subtotal with iva        ..............","Q.%.2f" % subtotal_with_iva
-    print "Final Total              ..............","Q.%.2f" % Total_final
+    print "Final Total              ..............","Q.%.2f" % Final_Total
     print "-----------------------------------------------"
     print "           Thank you for shopping with us."
     print " "
@@ -147,7 +149,9 @@ def Creation_of_invoice(recibir_conteo, lista):
 #    new_purchase()
 
 def delete_data():
-    PRICE_ARTICLE.clear()#Dictionari
+#    PRICE_ARTICLE.clear()#Dictionari
+    PRICE_ARTICLE = {}
+    EXISTENCE_ARTICLE = {}
     del PRODUCTS_PURCHASED [0:]#List
     del PRODUCTS_PURCHASED_NAMES [0:]
     COUNT_PRODUCTS =0
