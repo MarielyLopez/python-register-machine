@@ -1,6 +1,6 @@
 """registermachine"""
 #coding:utf-8
-from operator import itemgetter
+
 import os
 import sys
 
@@ -8,20 +8,20 @@ PRICE_ARTICLE = {}#Dictionari
 EXISTENCE_ARTICLE = {}
 PRODUCTS_PURCHASED = []#List
 PRODUCTS_PURCHASED_NAMES = []
-COUNT_PRODUCTS = 0
+COUNTING_PRODUCTS = 0
 COLORS_OF_CARDS = []
 SORT_COLOR = []
 SORT_OF_DISCOUNT = ""
 
 def add_article():
-#It will ask the user to enter an article.
+    """It will ask the user to enter an article."""
     clear()
     print "It adds the name of the article"
     name_article = raw_input("     >")#The article inserted will be saving in variable name_article.
     return name_article.lower()
 
 def add_price():
-#It will ask the user to enter price of article
+    """It will ask the user to enter price of article"""
     print "Inserts the item's price"
     addprice = True
     while addprice == True:
@@ -29,11 +29,11 @@ def add_price():
         try:
             price_article = float(price_article)
             return price_article
-        except:
-            print "Insert a number ."
+        except ValueError:
+            print "Insert a number."
 
 def add_quantity_items():
-#It will ask the user to enter quantity of articles of there's at inventory.
+    """It will ask the user to enter quantity of articles of there's at inventory."""
     print "Inserts add quantity of items."
     addquantityitems = True
     while addquantityitems == True:
@@ -41,15 +41,16 @@ def add_quantity_items():
         try:
             quantity = int(quantity)
             return quantity
-        except:
+        except ValueError:
             print "Try again,enter a integer for inventory"
 
 def save_articles(article, price, quantity):
-#will be saving price of article in the dictionary.
+    """will be saving price of article in the dictionary."""
     PRICE_ARTICLE[article] = price
     EXISTENCE_ARTICLE[article] = quantity
 
 def add_more_article():
+    """This will ask the user to enter an article."""
     addmorearticle = True
     while addmorearticle == True:
         user_answer = raw_input(" Are you want to add more articles? y/n  ")
@@ -64,7 +65,7 @@ def add_more_article():
 
 #start the fuctions for done.
 def article_to_sell():
-#There will be enter all products sold.
+    """There will be enter all products sold."""
     print " "
     print " --------------Cash---------------"
     print "  "
@@ -73,10 +74,12 @@ def article_to_sell():
     return article
 
 def check_if_exists(article):
+    """There will be check if exists article and then take key"""
     exists = EXISTENCE_ARTICLE.has_key(article)
     return exists
 
 def check_quantity(article):
+    """There will be check quantity the numbers of names repeared"""
     quantity = EXISTENCE_ARTICLE.get(article)
     print "Had " + str(quantity), article, "(s)"
     if quantity > 0:
@@ -87,38 +90,41 @@ def check_quantity(article):
         print "Not available"
 
 def count_products_name(article):
+    """There will be count names of articles"""
     PRODUCTS_PURCHASED_NAMES.append(article)
 
 def order_products():
-    #It will display the products in alphabetical order
+    """It will display the products in alphabetical order"""
     PRODUCTS_PURCHASED = sorted(PRODUCTS_PURCHASED_NAMES)# It will alphabetical order.
-    COUNT_PRODUCTS = len(PRODUCTS_PURCHASED)#count how many here.
-#here they are numbered and ordered products are stored.
-    Creation_of_invoice(COUNT_PRODUCTS, PRODUCTS_PURCHASED)
+    counting_products = len(PRODUCTS_PURCHASED)#count how many here.
+    #here they are numbered and ordered products are stored.
+    creation_of_invoice(counting_products, PRODUCTS_PURCHASED)
     return False
 
 def check_of_done(article):
+    """this only will be to verified word DONE"""
     if article == "done":
         print "Card has been inserting."
         print "It will print the invoice"
         print "-----------------------------------------"
         return True
-        SORT_OF_DISCOUNT = "gold"
+    #        SORT_OF_DISCOUNT = "gold"
         return"gold"
     elif article == "silver":
-        SORT_OF_DISCOUNT = "silver"
+    #        SORT_OF_DISCOUNT = "silver"
         return "silver"
     elif article == "gold":
-        SORT_OF_DISCOUNT = "gold"
+    #        SORT_OF_DISCOUNT = "gold"
         return "gold"
     else:
         return False
 
-def Creation_of_invoice(recibir_conteo, lista):
+def creation_of_invoice(recibir_conteo, lista):
+    """This only will be print my invoice before to create"""
     clear()
     subtotal = 0
     subtotal_with_iva = 0
-    Final_Total = 0
+    final_total = 0
     print "  "
     print "----------------INVOICE------------------"
     print "  "
@@ -128,17 +134,17 @@ def Creation_of_invoice(recibir_conteo, lista):
     print "Quantity.        Product           Price/Unit"
     print "  "
     for product in PRICE_ARTICLE:
-        COUNT_PRODUCTS = lista.count(product)
-        if COUNT_PRODUCTS > 0:
+        counting_products = lista.count(product)
+        if counting_products > 0:
             price = PRICE_ARTICLE[product]
-            subtotal += (COUNT_PRODUCTS*price)
+            subtotal += (counting_products*price)
             subtotal_with_iva = (subtotal* 0.12)+subtotal
-            Final_Total = subtotal_with_iva - discounting_of_card(subtotal)
-            print COUNT_PRODUCTS,"                " ,product +"       ......","Q.%.2f" % price +" unit"
-    print "subtotal                 ..............","Q.%.2f" % subtotal
-    print "Discount is              ..............","Q.%.2f" % discounting_of_card(subtotal)
-    print "Subtotal with iva        ..............","Q.%.2f" % subtotal_with_iva
-    print "Final Total              ..............","Q.%.2f" % Final_Total
+            final_total = subtotal_with_iva - discounting_of_card(subtotal)
+            print counting_products, "                ", product +": ", "Q.%.2f" % price +" unit"
+    print "subtotal                 ..............", "Q.%.2f" % subtotal
+    print "Discount is              ..............", "Q.%.2f" % discounting_of_card(subtotal)
+    print "Subtotal with iva        ..............", "Q.%.2f" % subtotal_with_iva
+    print "Final Total              ..............", "Q.%.2f" % final_total
     print "-----------------------------------------------"
     print "           Thank you for shopping with us."
     print " "
@@ -149,64 +155,65 @@ def Creation_of_invoice(recibir_conteo, lista):
 #    new_purchase()
 
 def delete_data():
-#    PRICE_ARTICLE.clear()#Dictionari
-    PRICE_ARTICLE = {}
+    """this may only allow a new purchase"""
+    PRICE_ARTICLE = {}#Dictionari
     EXISTENCE_ARTICLE = {}
-    del PRODUCTS_PURCHASED [0:]#List
-    del PRODUCTS_PURCHASED_NAMES [0:]
-    COUNT_PRODUCTS =0
-    del COLORS_OF_CARDS [0:]
-    del SORT_COLOR [0:]
+    del PRODUCTS_PURCHASED[0:]#List
+    del PRODUCTS_PURCHASED_NAMES[0:]
+    COUNTING_PRODUCTS = 0
+    del COLORS_OF_CARDS[0:]
+    del SORT_COLOR[0:]
     SORT_OF_DISCOUNT = ""
 
 def clear():
-   """Cleans the data on screen."""
-   if os.name == "posix":
-       os.system("reset")
-   elif os.name == ("nt"):
-       os.system("cls")
+    """Cleans the data on screen."""
+    if os.name == "posix":
+        os.system("reset")
+    elif os.name == ("nt"):
+        os.system("cls")
 
 def print_card():
-#This check color of cards.
+    """This check color of cards."""
     simbol_gold = "G"
     simbol_silver = "S"
     gold = 0
     silver = 0
     gold_and_silver = 0
     if simbol_gold in SORT_COLOR:
-        gold +=1
+        gold += 1
     if simbol_silver in SORT_COLOR:
-        silver +=1
-    if gold >0 and silver == 0:
+        silver += 1
+    if gold > 0 and silver == 0:
         return "Gold"
-    elif silver >0 and gold == 0:
+    elif silver > 0 and gold == 0:
         return "Silver"
-    if silver >0 and gold >0:
+    if silver > 0 and gold > 0:
         return "Gold"
     else:
         return 0
 
 def discounting_of_card(subtotal):
-# The discount is selected depending of inserted by the user.
+    """The discount is selected depending of inserted by the user."""
     simbol_gold = "G"
     simbol_silver = "S"
     gold = 0
     silver = 0
     gold_and_silver = 0
     if simbol_gold in SORT_COLOR:
-        gold +=1
+        gold += 1
     if simbol_silver in SORT_COLOR:
-        silver +=1
-    if gold >0 and silver == 0:
+        silver += 1
+    if gold > 0 and silver == 0:
         return subtotal*0.05
-    elif silver >0 and gold == 0:
+    elif silver > 0 and gold == 0:
         return subtotal*0.02
-    elif silver >0 and gold >0:
+    elif silver > 0 and gold > 0:
         return subtotal*0.05
     else:
         return 0
 
 def fuctions_add_items():
+    """this only show the variables, later will be call in menu"""
     add_articles = True
     while add_articles == True:
         article = add_article()
@@ -216,6 +223,7 @@ def fuctions_add_items():
         add_articles_ask = add_more_article()
 
 def fuctions_sell():
+    """This only check if the user has entered siler or gold for later to sell"""
     sell_products = True
     while sell_products == True:
         article = article_to_sell()
@@ -229,15 +237,12 @@ def fuctions_sell():
             SORT_COLOR.append("G")
         else:
             if check_if_exists(article) == True:
-                available = check_quantity(article)
-                if available == False:
-                    print "No available"
-                    sell_products = True
+                check_quantity(article)
             else:
-                print "The article not exists."
+                print"The product doesn't exists"
 
-#Print my menu asking the user to input your choice.
 def menu():
+    """Print my menu asking the user to input your choice."""
     clear()
     print ""
     print " --------------Menu---------------"
@@ -253,7 +258,6 @@ def menu():
             fuctions_add_items()
         elif insert_answer == "2":
             fuctions_sell()
-            check_quantity
             break
         elif insert_answer == "3":
             print "Good bye"
