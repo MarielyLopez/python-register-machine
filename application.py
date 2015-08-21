@@ -8,7 +8,6 @@ PRICE_ARTICLE = {}#Dictionari
 EXISTENCE_ARTICLE = {}
 PRODUCTS_PURCHASED = []#List
 PRODUCTS_PURCHASED_NAMES = []
-COUNTING_PRODUCTS = 0
 COLORS_OF_CARDS = []
 SORT_COLOR = []
 SORT_OF_DISCOUNT = ""
@@ -59,7 +58,6 @@ def add_more_article():
             return True
         elif user_answer == "n" or user_answer == "no":
             menu()
-            return False
         else:
             print "Insert a valid option"
 
@@ -95,10 +93,10 @@ def count_products_name(article):
 
 def order_products():
     """It will display the products in alphabetical order"""
-    PRODUCTS_PURCHASED = sorted(PRODUCTS_PURCHASED_NAMES)# It will alphabetical order.
-    counting_products = len(PRODUCTS_PURCHASED)#count how many here.
+    products_purchased = sorted(PRODUCTS_PURCHASED_NAMES)# It will alphabetical order.
+    counting_products = len(products_purchased)#count how many here.
     #here they are numbered and ordered products are stored.
-    creation_of_invoice(counting_products, PRODUCTS_PURCHASED)
+    creation_of_invoice(counting_products, products_purchased)
     return False
 
 def check_of_done(article):
@@ -108,8 +106,6 @@ def check_of_done(article):
         print "It will print the invoice"
         print "-----------------------------------------"
         return True
-    #        SORT_OF_DISCOUNT = "gold"
-        return"gold"
     elif article == "silver":
     #        SORT_OF_DISCOUNT = "silver"
         return "silver"
@@ -156,14 +152,10 @@ def creation_of_invoice(recibir_conteo, lista):
 
 def delete_data():
     """this may only allow a new purchase"""
-    PRICE_ARTICLE = {}#Dictionari
-    EXISTENCE_ARTICLE = {}
     del PRODUCTS_PURCHASED[0:]#List
     del PRODUCTS_PURCHASED_NAMES[0:]
-    COUNTING_PRODUCTS = 0
     del COLORS_OF_CARDS[0:]
     del SORT_COLOR[0:]
-    SORT_OF_DISCOUNT = ""
 
 def clear():
     """Cleans the data on screen."""
@@ -178,7 +170,6 @@ def print_card():
     simbol_silver = "S"
     gold = 0
     silver = 0
-    gold_and_silver = 0
     if simbol_gold in SORT_COLOR:
         gold += 1
     if simbol_silver in SORT_COLOR:
@@ -190,7 +181,7 @@ def print_card():
     if silver > 0 and gold > 0:
         return "Gold"
     else:
-        return 0
+        return "Without discount"
 
 def discounting_of_card(subtotal):
     """The discount is selected depending of inserted by the user."""
@@ -198,7 +189,6 @@ def discounting_of_card(subtotal):
     simbol_silver = "S"
     gold = 0
     silver = 0
-    gold_and_silver = 0
     if simbol_gold in SORT_COLOR:
         gold += 1
     if simbol_silver in SORT_COLOR:
@@ -220,7 +210,7 @@ def fuctions_add_items():
         price = add_price()
         quantity = add_quantity_items()
         save_articles(article, price, quantity)
-        add_articles_ask = add_more_article()
+        add_more_article()
 
 def fuctions_sell():
     """This only check if the user has entered siler or gold for later to sell"""
